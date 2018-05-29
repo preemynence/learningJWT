@@ -74,6 +74,7 @@ public class AuthController {
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = jwtTokenUtil.getToken(request.getHeader(tokenHeader));
         String username = jwtTokenUtil.getUsernameFromToken(token);
+
         CustomUser user = (CustomUser) userDetailsService.loadUserByUsername(username);
 
         if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
@@ -84,7 +85,7 @@ public class AuthController {
 
             return ResponseEntity.ok(refreshTokenResponse);
         } else {
-            return new ResponseEntity("Invalid Refresh token.",HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token.");
         }
     }
 
