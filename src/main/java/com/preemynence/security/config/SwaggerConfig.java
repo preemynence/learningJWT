@@ -53,7 +53,7 @@ public class SwaggerConfig {
     }
 
     @Bean
-    SecurityConfiguration security() {
+    private SecurityConfiguration security() {
         return new SecurityConfiguration("emailSecurity_client", "secret", "Spring", "emailSecurity", "", ApiKeyVehicle.HEADER, "", ",");
     }
 
